@@ -1,4 +1,4 @@
-# Draft-Attn
+# Draft Attention
 
 This repository provides an overview of all resources for the paper 
 ["Draft-Attn: Accelerating Video Diffusion Transformers with Draft Attention"]().
