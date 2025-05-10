@@ -1,3 +1,8 @@
+
+<p align="center">
+  <img src="./assets/draft-attention.png" width="459"/>
+</p>
+
 # Draft Attention
 
 This repository provides an overview of all resources for the paper 
