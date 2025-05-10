@@ -16,14 +16,15 @@ Draft Attention introduces minimal overhead by compressing the number of tokens 
 ## Quick Start
 
 ### Model Preparation
-Please follow the instruction of environment setup and download the checkpoint from [HunyuanVideo](https://github.com/Tencent/HunyuanVideo) and [Wan](https://github.com/Wan-Video/Wan2.1)
+Please follow the instruction of environment setup and download the checkpoint from [HunyuanVideo](https://github.com/Tencent/HunyuanVideo) and [Wan](https://github.com/Wan-Video/Wan2.1).
 
 ### Sparse Attention
 We mainly adopt the [block sparse attention](https://github.com/mit-han-lab/Block-Sparse-Attention) for draft attention.
 
 ### Video Generation
-Simply run video generation with scripts in `hunyuan/` or `wan/`
+Simply run video generation with scripts in `hunyuan/` or `wan/`.
 
+Evaluation results in the paper are mainly achieved with [VBench](https://github.com/Vchitect/VBench) on [Penguin Video Benchmark](https://github.com/Tencent/HunyuanVideo/blob/main/assets/PenguinVideoBenchmark.csv).
 
 
 ## Acknowledgement
