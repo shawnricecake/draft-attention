@@ -89,7 +89,7 @@ Draft Attention introduces minimal overhead by compressing the number of tokens 
 
 Prompts are all from the <a href="https://github.com/Tencent/HunyuanVideo/blob/main/assets/PenguinVideoBenchmark.csv">Penguin Video Benchmark</a>. 
 
-Videos are generated with sparsity 90%, seed 42, using Hunyuan model in 768p.
+Videos are generated with sparsity 90%, seed 42, using Hunyuan model in 768p on A100 GPU.
 
 
 ## 🚀 Quick Start
