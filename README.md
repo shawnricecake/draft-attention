@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="./assets/draft-attention.png" width="459"/>
+  <img src="./assets/draft-attention.svg" width="459"/>
 </p>
 
 # Draft Attention
