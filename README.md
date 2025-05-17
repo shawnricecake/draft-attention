@@ -18,6 +18,27 @@ Draft Attention provides the reference for the sparse attention in full length.
 Draft Attention introduces minimal overhead by compressing the number of tokens 128x or larger.
 
 
+
+<table>
+  <tr>
+    <td align="center" width="300">
+      <video src="./assets/demo-building-dense.mp4" controls width="100%"></video>
+      <br><em>Dense Attention </em>
+    </td>
+    <td align="center" width="300">
+      <video src="./assets/demo-building-sp0.9-svg.mp4" controls width="100%"></video>
+      <br><em>Sparse Video Generation (SVG)</em>
+    </td>
+    <td align="center" width="300">
+      <video src="./assets/demo-building-sp0.9-ours.mp4" controls width="100%"></video>
+      <br><em>Draft Attention</em>
+    </td>
+  </tr>
+</table>
+
+
+
+
 ## Quick Start
 
 ### Model Preparation
