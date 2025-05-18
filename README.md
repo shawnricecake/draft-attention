@@ -137,6 +137,10 @@ x = draft_attention(
 )
 ```
 
+## ✏️ TODO
+- [ ] Support Any-Resolution Video Generation with Padding
+
+
 ## 📑 Acknowledgement
 This work is mainly contributed by [Xuan](https://shawnricecake.github.io) and [Chenxia](https://cxhan.com/).
 
