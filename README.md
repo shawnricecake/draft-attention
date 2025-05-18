@@ -28,7 +28,7 @@ Draft Attention introduces minimal overhead by compressing the number of tokens 
     </td>
     <td align="center">
       <img src="assets/video/demo-building-sp0.9-svg.gif" width="100%"/><br>
-      <em>Sparse Video Generation (SVG)</em>
+      <em><a href="https://github.com/svg-project/Sparse-VideoGen/tree/main?tab=readme-ov-file" target="_blank">Sparse Video Generation (SVG)</a></em>
     </td>
     <td align="center">
       <img src="assets/video/demo-building-sp0.9-ours.gif" width="100%"/><br>
@@ -51,7 +51,7 @@ Draft Attention introduces minimal overhead by compressing the number of tokens 
     </td>
     <td align="center">
       <img src="assets/video/demo-pisa-sp0.9-svg.gif" width="100%"/><br>
-      <em>Sparse Video Generation (SVG)</em>
+      <em><a href="https://github.com/svg-project/Sparse-VideoGen/tree/main?tab=readme-ov-file" target="_blank">Sparse Video Generation (SVG)</a></em>
     </td>
     <td align="center">
       <img src="assets/video/demo-pisa-sp0.9-ours.gif" width="100%"/><br>
@@ -74,7 +74,7 @@ Draft Attention introduces minimal overhead by compressing the number of tokens 
     </td>
     <td align="center">
       <img src="assets/video/demo-bluedress-sp0.9-svg.gif" width="100%"/><br>
-      <em>Sparse Video Generation (SVG)</em>
+      <em><a href="https://github.com/svg-project/Sparse-VideoGen/tree/main?tab=readme-ov-file" target="_blank">Sparse Video Generation (SVG)</a></em>
     </td>
     <td align="center">
       <img src="assets/video/demo-bluedress-sp0.9-ours.gif" width="100%"/><br>
