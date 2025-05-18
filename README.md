@@ -105,6 +105,37 @@ Simply run video generation with scripts in `hunyuan/` or `wan/`.
 
 Evaluation results in the paper are mainly achieved with [VBench](https://github.com/Vchitect/VBench) on [Penguin Video Benchmark](https://github.com/Tencent/HunyuanVideo/blob/main/assets/PenguinVideoBenchmark.csv).
 
+### Use for Your Own
+You can simply use the draft attention similar as the flash attention through the `Draft_Attention` defined in `draft_attention.py`
+
+Here is the example for hunyuan model:
+```python3
+from draft_attention import Draft_Attention
+
+draft_attention = Draft_Attention(
+    pool_h=8,
+    pool_w=16,
+    latent_h=48,
+    latent_w=80,
+    visual_len=126_720,
+    text_len=256,
+    sparsity_ratio=0.9,
+)
+
+x = draft_attention(
+    q,
+    k,
+    v,
+    attn_mask=attn_mask,
+    causal=causal,
+    drop_rate=drop_rate,
+    cu_seqlens_q=cu_seqlens_q,
+    cu_seqlens_kv=cu_seqlens_kv,
+    max_seqlen_q=max_seqlen_q,
+    max_seqlen_kv=max_seqlen_kv,
+    batch_size=batch_size,
+)
+```
 
 ## 📑 Acknowledgement
 This work is mainly contributed by [Xuan](https://shawnricecake.github.io) and [Chenxia](https://cxhan.com/).
