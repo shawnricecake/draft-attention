@@ -468,6 +468,8 @@ def attention(
         
     # Xuan: implement the block sparse attention here
     elif mode == "block_sparse_attention":
+        assert q.shape[0] == 126_720+256, "Currently, we only support 768*1280 resolution, and we will implement the padding for any-resolution generation in the future."
+
         draft_attention = Draft_Attention(
             pool_h=8,
             pool_w=16,

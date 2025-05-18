@@ -471,9 +471,12 @@ def flash_attention(
     # self attention: q, k, v shape: [32256, 40, 128];      [80640, 40, 128] 80640=21x 48x80
     # cross attention: q [32256, 40, 128], k, v [512, 40, 128]
 
+    assert q.shape[0] == 32_256 or 80_640, "Currently, we only support 768*512 and 1280*768 resolution, and we will implement the padding for any-resolution generation in the future."
+
     # =====================================================================
     # Xuan: sparse
-    if q.shape[0] != k.shape[0] or (idx_block is not None and idx_block < 1) or (current_timestep[0] > 925):    # trick from https://github.com/svg-project/Sparse-VideoGen/blob/079364dc2e4ca6cd0c26c8c45eafeb9fbf51ef8e/svg/models/wan/attention.py#L212
+    if q.shape[0] != k.shape[0] or (idx_block is not None and idx_block < 1) or (current_timestep[0] > 925):
+        # trick from https://github.com/svg-project/Sparse-VideoGen/blob/079364dc2e4ca6cd0c26c8c45eafeb9fbf51ef8e/svg/models/wan/attention.py#L212
         x = flash_attn.flash_attn_varlen_func(
             q=q,
             k=k,
@@ -495,15 +498,9 @@ def flash_attention(
     draft_attention = Draft_Attention(
             pool_h=8,
             pool_w=16,
-
-            latent_h=32,
-            latent_w=48,
-            visual_len=32_256,  # 512p
-
-            # latent_h=48,
-            # latent_w=80,
-            # visual_len=80_640,    # 768p
-
+            latent_h=32 if q.shape[0] == 32256 else 48,
+            latent_w=48 if q.shape[0] == 32256 else 80,
+            visual_len=q.shape[0],
             text_len=0,
             sparsity_ratio=0.75 # todo
         )

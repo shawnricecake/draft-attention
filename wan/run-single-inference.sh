@@ -1,7 +1,5 @@
 
-
-# ckpt_dir="/mnt/localssd/wan/Wan2.1-T2V-14B"
-ckpt_dir="/mnt/localssd/wan/"
+ckpt_dir="/mnt/localssd/wan/Wan2.1-T2V-14B"
 
 
 export CUDA_VISIBLE_DEVICES=0
@@ -11,7 +9,7 @@ export CUDA_VISIBLE_DEVICES=0
 
 python3 -u generate.py \
         --task t2v-14B \
-        --size 1280*768 \
+        --size 768*512 \
         --ckpt_dir $ckpt_dir \
         --prompt "A giant panda is walking."
 
