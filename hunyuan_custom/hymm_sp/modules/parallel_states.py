@@ -7,7 +7,7 @@ from torch import Tensor
 from flash_attn.flash_attn_interface import flash_attn_varlen_func
 
 # Xuan: use draft attention here
-from hymm_sp.modules.draft_attention import Draft_Attention
+from hymm_sp.modules.draft_attention_classifier_free_guidance import Draft_Attention
 
 class COMM_INFO:
     def __init__(self):
