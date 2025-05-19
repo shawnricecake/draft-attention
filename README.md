@@ -127,7 +127,7 @@ Videos are generated with seed 42 in 768p resolution on 8xA100 GPUs, with either
 ## 🚀 Quick Start
 
 ### Model Preparation
-Please follow the instruction of environment setup and download the checkpoint from [HunyuanVideo](https://github.com/Tencent/HunyuanVideo), [Wan2.1](https://github.com/Wan-Video/Wan2.1), and [HunyuanCustom](https://github.com/Tencent/HunyuanCustom)
+Please follow the instruction of environment setup and download the checkpoint from [HunyuanVideo](https://github.com/Tencent/HunyuanVideo), [Wan2.1](https://github.com/Wan-Video/Wan2.1), and [HunyuanCustom](https://github.com/Tencent/HunyuanCustom).
 
 ### Sparse Attention
 We mainly adopt the [block sparse attention](https://github.com/mit-han-lab/Block-Sparse-Attention) for draft attention.
@@ -170,7 +170,8 @@ x = draft_attention(
 ```
 
 ## ✏️ TODO
-- [ ] Support Any-Resolution Video Generation with Padding
+- [ ] Support Any-Resolution Video Generation with Padding.
+- [ ] Support FP8.
 
 
 ## 📑 Acknowledgement
