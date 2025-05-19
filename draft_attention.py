@@ -173,7 +173,7 @@ class Draft_Attention(nn.Module):
 
 
     def attention_percentile_mask_headwise(self, attn_map: torch.Tensor, r: float) -> torch.BoolTensor:
-        
+
         H, S, _ = attn_map.shape
         mask = torch.zeros_like(attn_map, dtype=torch.bool)
 
@@ -276,8 +276,13 @@ class Draft_Attention(nn.Module):
                 is_causal=causal,
                 exact_streaming=False,
                 return_attn_probs=False,
-                m_block_dim=m_block_dim,
-                n_block_dim=n_block_dim,
+
+                # in 'block_sparse_attention' package, the default block size is 128 as hard code
+                #   you can revise the block size at: https://github.com/mit-han-lab/Block-Sparse-Attention/blob/6ec5a27a0cd6bd92ea6296698d64e460c73da27e/block_sparse_attn/block_sparse_attn_interface.py#L402
+                #   or you can set it as input for the function 'block_sparse_attn_func()'
+
+                # m_block_dim=m_block_dim,
+                # n_block_dim=n_block_dim,
             )
 
             # re-organize the x to the original order
