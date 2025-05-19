@@ -120,7 +120,7 @@ Videos are generated with sparsity 90%, seed 42, using Hunyuan model in 768p on 
   <em>"Realistic, High-quality. A woman is drinking coffee at a café."</em><br>
 </p>
 
-Videos are generated using the default setting in 768p resolution on an A100 GPU, with either dense attention or 90% sparse attention.
+Videos are generated using the default setting in 768p resolution on 8xA100 GPUs, with either dense attention or 90% sparse attention.
 
 
 
