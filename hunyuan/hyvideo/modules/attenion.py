@@ -264,8 +264,8 @@ class Draft_Attention(nn.Module):
         # ======== block_sparse_attention setup ========
 
         attn = self.sample_qk_attention_2d(
-            q[:self.visual_len] if self.text_len > 0 else q,
-            k[:self.visual_len] if self.text_len > 0 else k,
+            q[:self.visual_len],
+            k[:self.visual_len],
             frame_h=self.latent_h,
             frame_w=self.latent_w,
             pool_h=self.pool_h,
