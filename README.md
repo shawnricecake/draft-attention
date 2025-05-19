@@ -18,8 +18,14 @@ Draft Attention provides the reference for the sparse attention in full length.
 Draft Attention introduces minimal overhead by compressing the number of tokens 128x or larger.
 
 
+## 🔥News
+- [2025/05] We support [HunyuanCustom](https://github.com/Tencent/HunyuanCustom) with classifier free guidance.
+
+
+
 ## 🎥 Demo
 
+### Hunyuan
 <table>
   <tr>
     <td align="center">
@@ -91,22 +97,48 @@ Prompts are all from the <a href="https://github.com/Tencent/HunyuanVideo/blob/m
 
 Videos are generated with sparsity 90%, seed 42, using Hunyuan model in 768p on A100 GPU.
 
+### HunyuanCustom
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="hunyuan_custom/assets/images/seg_woman_01.png" width="35%"/><br>
+      <em>Input Image</em>
+    </td>
+    <td align="center">
+      <img src="assets/video/demo-hunyuan_custom-768p-dense.gif" width="100%"/><br>
+      <em>Dense Attention</em>
+    </td>
+    <td align="center">
+      <img src="assets/video/demo-hunyuan_custom-768p-sp0.9.gif" width="100%"/><br>
+      <em>Draft Attention (Ours)</em>
+    </td>
+  </tr>
+</table>
+<p align="center">
+  <strong>Prompt:</strong>
+  <em>"Realistic, High-quality. A woman is drinking coffee at a café."</em><br>
+</p>
+
+Videos are generated using the default setting in 768p resolution on an A100 GPU, with either dense attention or 90% sparse attention.
+
+
 
 ## 🚀 Quick Start
 
 ### Model Preparation
-Please follow the instruction of environment setup and download the checkpoint from [HunyuanVideo](https://github.com/Tencent/HunyuanVideo) and [Wan](https://github.com/Wan-Video/Wan2.1).
+Please follow the instruction of environment setup and download the checkpoint from [HunyuanVideo](https://github.com/Tencent/HunyuanVideo), [Wan2.1](https://github.com/Wan-Video/Wan2.1), and [HunyuanCustom](https://github.com/Tencent/HunyuanCustom)
 
 ### Sparse Attention
 We mainly adopt the [block sparse attention](https://github.com/mit-han-lab/Block-Sparse-Attention) for draft attention.
 
 ### Video Generation
-Simply run video generation with scripts in `hunyuan/` or `wan/`.
+Simply run video generation with scripts in `hunyuan/`, `wan/` or `hunyuan_custom/`.
 
-Evaluation results in the paper are mainly achieved with [VBench](https://github.com/Vchitect/VBench) on [Penguin Video Benchmark](https://github.com/Tencent/HunyuanVideo/blob/main/assets/PenguinVideoBenchmark.csv).
+Evaluation results in the paper are mainly achieved with [VBench](https://github.com/Vchitect/VBench) on [Penguin Video Benchmark](https://github.com/Tencent/HunyuanVideo/blob/main/assets/PenguinVideoBenchmark.csv) using HunyuanVideo and Wan2.1.
 
 ### Use for Your Own
-You can simply use the draft attention similar as the flash attention through the `Draft_Attention` defined in `draft_attention.py`
+You can simply use the draft attention similar as the flash attention through the `Draft_Attention` defined in `draft_attention.py` or `draft_attention_classifier_free_guidance.py`.
 
 Here is the example for hunyuan model:
 ```python3
