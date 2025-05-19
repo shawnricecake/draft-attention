@@ -18,7 +18,7 @@ Draft Attention provides the reference for the sparse attention in full length.
 Draft Attention introduces minimal overhead by compressing the number of tokens 128x or larger.
 
 
-## 🔥News
+## 🔥 News
 - [2025/05] We support [HunyuanCustom](https://github.com/Tencent/HunyuanCustom) with classifier free guidance.
 
 
