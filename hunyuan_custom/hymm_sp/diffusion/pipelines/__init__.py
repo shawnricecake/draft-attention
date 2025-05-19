@@ -1,0 +1,1 @@
+from .pipeline_hunyuan_video_custom import HunyuanVideoCustomPipeline

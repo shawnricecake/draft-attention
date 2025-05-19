@@ -1,0 +1,9 @@
+{
+  "item_image_path": "assets/images/poodle.png",
+  "item_prompt": "dog",
+  "seed": 1124,
+  "prompt": "A dog is chasing a cat in the park.",
+  "negative_prompt": "",
+  "chinese": "一只狗在公园里追一只猫。",
+  "seg_item_image_path": "assets/images/seg_poodle.png"
+}
