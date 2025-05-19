@@ -116,7 +116,9 @@ class DoubleStreamBlock(nn.Module):
         cu_seqlens_kv: Optional[torch.Tensor] = None,
         max_seqlen_q: Optional[int] = None,
         max_seqlen_kv: Optional[int] = None,
-        freqs_cis: tuple = None
+        freqs_cis: tuple = None,
+        time_step: Optional[torch.Tensor] = None,
+        layer_num: Optional[int] = None,
     ) -> Tuple[torch.Tensor, torch.Tensor]:
         img_mod1_shift, img_mod1_scale, img_mod1_gate, img_mod2_shift, img_mod2_scale, img_mod2_gate = (
             self.img_mod(vec).chunk(6, dim=-1)
@@ -160,6 +162,21 @@ class DoubleStreamBlock(nn.Module):
         k = torch.cat((img_k, txt_k), dim=1)
         v = torch.cat((img_v, txt_v), dim=1)
 
+        # Xuan:
+        # 512x896: 
+        #   img_q.shape = img_k.shape = [2, 60928, 24, 128], 60928 = 34*(32*56)
+
+        # 512x768: 
+        #   img_q.shape = img_k.shape = [2, 52224, 24, 128], 52224 = 34*(32*48)
+
+        # 720x1280: 
+        #   img_q.shape = img_k.shape = [2, 15300, 24, 128], 15300 * 8 = 122400 = 34*(45*80)
+        #   txt_q.shape = txt_k.shape = [2, 831, 24, 128]
+
+        # 768x1280: 
+        #   img_q.shape = img_k.shape = [2, 16320, 24, 128], 16320 * 8 = 130560 = 34*(48*80)
+        #   txt_q.shape = txt_k.shape = [2, 831, 24, 128]
+
         # Compute attention.
         if CPU_OFFLOAD or DISABLE_SP:
             assert cu_seqlens_q.shape[0] == 2 * img.shape[0] + 1
@@ -168,6 +185,7 @@ class DoubleStreamBlock(nn.Module):
                 x.view(x.shape[0] * x.shape[1], *x.shape[2:])
                 for x in [q, k, v]
             ]
+
             attn = flash_attn_varlen_func(
                 q,
                 k,
@@ -189,6 +207,8 @@ class DoubleStreamBlock(nn.Module):
                 cu_seqlens_kv=cu_seqlens_kv,
                 max_seqlen_q=max_seqlen_q,
                 max_seqlen_kv=max_seqlen_kv,
+                time_step=time_step,
+                layer_num=layer_num,
             )
         img_attn, txt_attn = attn[:, :img.shape[1]], attn[:, img.shape[1]:]
 
@@ -272,6 +292,7 @@ class SingleStreamBlock(nn.Module):
         max_seqlen_q: Optional[int] = None,
         max_seqlen_kv: Optional[int] = None,
         freqs_cis: Tuple[torch.Tensor, torch.Tensor] = None,
+        time_step: Optional[torch.Tensor] = None,
     ) -> torch.Tensor:
         mod_shift, mod_scale, mod_gate = (
             self.modulation(vec).chunk(3, dim=-1)
@@ -332,6 +353,7 @@ class SingleStreamBlock(nn.Module):
                 cu_seqlens_kv=cu_seqlens_kv,
                 max_seqlen_q=max_seqlen_q,
                 max_seqlen_kv=max_seqlen_kv,
+                time_step=time_step,
             )
         if CPU_OFFLOAD:
             torch.cuda.empty_cache()
@@ -562,7 +584,7 @@ class HYVideoDiffusionTransformer(ModelMixin, ConfigMixin):
         # --------------------- Pass through DiT blocks ------------------------
         if not is_cache:
             for layer_num, block in enumerate(self.double_blocks):
-                double_block_args = [img, txt, vec, cu_seqlens_q, cu_seqlens_kv, max_seqlen_q, max_seqlen_kv, freqs_cis]
+                double_block_args = [img, txt, vec, cu_seqlens_q, cu_seqlens_kv, max_seqlen_q, max_seqlen_kv, freqs_cis, t, layer_num]
                 img, txt = block(*double_block_args)
                 if CPU_OFFLOAD: torch.cuda.empty_cache()
 
@@ -573,7 +595,7 @@ class HYVideoDiffusionTransformer(ModelMixin, ConfigMixin):
                 for layer_num, block in enumerate(self.single_blocks):
                     if layer_num == (len(self.single_blocks) - 1):
                        self.cache_out = x
-                    single_block_args = [x, vec, txt_seq_len, cu_seqlens_q, cu_seqlens_kv, max_seqlen_q, max_seqlen_kv, (freqs_cos, freqs_sin)]
+                    single_block_args = [x, vec, txt_seq_len, cu_seqlens_q, cu_seqlens_kv, max_seqlen_q, max_seqlen_kv, (freqs_cos, freqs_sin), t]
                     x = block(*single_block_args)
                     if CPU_OFFLOAD: torch.cuda.empty_cache()
         else:
@@ -582,7 +604,7 @@ class HYVideoDiffusionTransformer(ModelMixin, ConfigMixin):
                 for layer_num, block in enumerate(self.single_blocks):
                     if layer_num < (len(self.single_blocks) - 1):
                        continue
-                    single_block_args = [x, vec, txt_seq_len, cu_seqlens_q, cu_seqlens_kv, max_seqlen_q, max_seqlen_kv, (freqs_cos, freqs_sin)]
+                    single_block_args = [x, vec, txt_seq_len, cu_seqlens_q, cu_seqlens_kv, max_seqlen_q, max_seqlen_kv, (freqs_cos, freqs_sin), t]
                     x = block(*single_block_args)
                     if CPU_OFFLOAD: torch.cuda.empty_cache()
 

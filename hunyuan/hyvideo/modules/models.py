@@ -383,7 +383,7 @@ class MMSingleStreamBlock(nn.Module):
                 
                 # mode="flash",
                 # mode="block_sparse_attention_dense" if (early_diffusion or i_block_here < 2) else "block_sparse_attention", 
-                mode="flash" if (early_diffusion or i_block_here < 2) else "block_sparse_attention", # Xuan: got trick from mit-han-lab: https://github.com/svg-project/Sparse-VideoGen/blob/079364dc2e4ca6cd0c26c8c45eafeb9fbf51ef8e/svg/models/hyvideo/modules/attenion.py#L233
+                mode="flash" if early_diffusion else "block_sparse_attention", # Xuan: got trick from mit-han-lab: https://github.com/svg-project/Sparse-VideoGen/blob/079364dc2e4ca6cd0c26c8c45eafeb9fbf51ef8e/svg/models/hyvideo/modules/attenion.py#L233
 
                 # mode="flash" if (early_diffusion or i_block_here < 2) else "block_sparse_attention",
                 # mode="flash" if (early_diffusion or i_block_here < 2) else "flex_attention",

@@ -959,6 +959,13 @@ class HunyuanVideoCustomPipeline(DiffusionPipeline):
         step_scale = (start_scale - end_scale) / (self._num_timesteps - 1 + 1e-3)
         if cpu_offload: torch.cuda.empty_cache()
         with self.progress_bar(total=num_inference_steps) as progress_bar:
+
+            #     [1000.0000,  997.3546,  994.5355,  991.5255,  988.3041,  984.8484,
+            #  981.1321,  977.1241,  972.7892,  968.0851,  962.9629,  957.3643,
+            #  951.2195,  944.4444,  936.9369,  928.5714,  919.1920,  908.6022,
+            #  896.5518,  882.7161,  866.6667,  847.8260,  825.3969,  798.2456,
+            #  764.7059,  722.2223,  666.6667,  590.9091,  481.4815,  309.5238]
+            
             for i, t in enumerate(timesteps):
                 if self.interrupt:
                     continue

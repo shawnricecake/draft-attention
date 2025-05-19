@@ -7,7 +7,7 @@ from torch import Tensor
 from flash_attn.flash_attn_interface import flash_attn_varlen_func
 
 # Xuan: use draft attention here
-from hymm_sp.modules.draft_attention_classifier_free_guidance import Draft_Attention
+from hymm_sp.modules.draft_attention import Draft_Attention
 
 class COMM_INFO:
     def __init__(self):
@@ -306,7 +306,7 @@ def all_gather(input_: torch.Tensor, dim: int = 1):
     """
     return _AllGather.apply(input_, dim)
 
-def parallel_attention(q, k, v, img_q_len, img_kv_len, cu_seqlens_q, cu_seqlens_kv, max_seqlen_q, max_seqlen_kv,):
+def parallel_attention(q, k, v, img_q_len, img_kv_len, cu_seqlens_q, cu_seqlens_kv, max_seqlen_q, max_seqlen_kv, time_step=None, layer_num=None):
     """
     img_q_len,img_kv_len: 32256
     text_mask: 2x256
@@ -359,31 +359,7 @@ def parallel_attention(q, k, v, img_q_len, img_kv_len, cu_seqlens_q, cu_seqlens_
     #   130_560 = 34*(48*80)
     #   max_seqlen_q = max_seqlen_kv = 131_391
     #   cu_seqlens_q = cu_seqlens_kv = [     0, 130615, 131391, 262548, 262782]
-    
-    draft_attention = Draft_Attention(
-        pool_h=8,
-        pool_w=16,
-        latent_h=48,
-        latent_w=80,
-        visual_len=130_560,
-        text_len=831,
-        sparsity_ratio=0.9, # todo
-        batch_size=bsz,
-    )
-    hidden_states = draft_attention(
-        query,
-        key,
-        value,
-        attn_mask=None,
-        causal=False,
-        drop_rate=0,
-        cu_seqlens_q=cu_seqlens_q,
-        cu_seqlens_kv=cu_seqlens_kv,
-        max_seqlen_q=max_seqlen_q,
-        max_seqlen_kv=max_seqlen_kv,
-        batch_size=bsz,
-    )
-    
+
     # ============ original (dense) ============
     # hidden_states = flash_attn_varlen_func(
     #     query,
@@ -395,6 +371,45 @@ def parallel_attention(q, k, v, img_q_len, img_kv_len, cu_seqlens_q, cu_seqlens_
     #     max_seqlen_kv,
     # )
     # ============ original (dense) ============
+    
+    # ============ sparse ============
+    if (time_step is not None and time_step[0] > 975) or (layer_num is not None and layer_num < 2):    # Xuan: add timestep trick
+        # ============ original ============
+        hidden_states = flash_attn_varlen_func(
+            query,
+            key,
+            value,
+            cu_seqlens_q,
+            cu_seqlens_kv,
+            max_seqlen_q,
+            max_seqlen_kv,
+        )
+        # ============ original ============
+    else:
+        draft_attention = Draft_Attention(
+            pool_h=8,
+            pool_w=16,
+            latent_h=48,
+            latent_w=80,
+            visual_len=130_560,
+            text_len=831,
+            sparsity_ratio=0.9, # todo
+            batch_size=bsz,
+        )
+        hidden_states = draft_attention(
+            query,
+            key,
+            value,
+            attn_mask=None,
+            causal=False,
+            drop_rate=0,
+            cu_seqlens_q=cu_seqlens_q,
+            cu_seqlens_kv=cu_seqlens_kv,
+            max_seqlen_q=max_seqlen_q,
+            max_seqlen_kv=max_seqlen_kv,
+            batch_size=bsz,
+        )
+    # ============ sparse ============
 
     # B, S, 3, H, D
     hidden_states = hidden_states.view(bsz, max_seqlen_q, head, head_dim).contiguous()
