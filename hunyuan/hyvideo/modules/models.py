@@ -208,12 +208,7 @@ class MMDoubleStreamBlock(nn.Module):
                 v,
                 
                 # mode="flash",
-                # mode="block_sparse_attention_dense" if (early_diffusion or i_block_here < 2) else "block_sparse_attention",
                 mode="flash" if (early_diffusion or i_block_here < 2) else "block_sparse_attention", # Xuan: got trick from mit-han-lab: https://github.com/svg-project/Sparse-VideoGen/blob/079364dc2e4ca6cd0c26c8c45eafeb9fbf51ef8e/svg/models/hyvideo/modules/attenion.py#L233
-                
-                # mode="flash" if (early_diffusion or i_block_here < 2) else "flex_attention",
-                # mode="flex_attention",
-                # mode="block_sparse_attention",
 
                 cu_seqlens_q=cu_seqlens_q,
                 cu_seqlens_kv=cu_seqlens_kv,
@@ -382,13 +377,7 @@ class MMSingleStreamBlock(nn.Module):
                 v,
                 
                 # mode="flash",
-                # mode="block_sparse_attention_dense" if (early_diffusion or i_block_here < 2) else "block_sparse_attention", 
                 mode="flash" if early_diffusion else "block_sparse_attention", # Xuan: got trick from mit-han-lab: https://github.com/svg-project/Sparse-VideoGen/blob/079364dc2e4ca6cd0c26c8c45eafeb9fbf51ef8e/svg/models/hyvideo/modules/attenion.py#L233
-
-                # mode="flash" if (early_diffusion or i_block_here < 2) else "block_sparse_attention",
-                # mode="flash" if (early_diffusion or i_block_here < 2) else "flex_attention",
-                # mode="flex_attention",
-                # mode="block_sparse_attention",
                 
                 cu_seqlens_q=cu_seqlens_q,
                 cu_seqlens_kv=cu_seqlens_kv,
