@@ -171,7 +171,6 @@ x = draft_attention(
 
 ## ✏️ TODO
 - [ ] Support Any-Resolution Video Generation with Padding.
-- [ ] Support FP8.
 
 
 ## 📑 Acknowledgement
