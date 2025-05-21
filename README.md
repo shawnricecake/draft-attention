@@ -170,8 +170,8 @@ x = draft_attention(
 ```
 
 ## ✏️ TODO
-- [ ] Support Any-Resolution Video Generation with Padding.
-
+- [ ] Support any-resolution video generation with padding.
+- [ ] Support reordering of further block sparse grouping for faster hardware execution.
 
 ## 📑 Acknowledgement
 This work is mainly contributed by [Xuan](https://shawnricecake.github.io) and [Chenxia](https://cxhan.com/).
