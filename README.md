@@ -6,7 +6,7 @@
 # Draft Attention
 
 This repository provides an overview of all resources for the paper 
-["DraftAttention: Fast Video Diffusion via Low-Resolution Attention Guidance"]().
+["DraftAttention: Fast Video Diffusion via Low-Resolution Attention Guidance"](https://arxiv.org/abs/2505.14708).
 
 
 Draft Attention is a plug-and-play acceleration method for video diffusion transformers.
