@@ -177,3 +177,13 @@ x = draft_attention(
 This work is mainly contributed by [Xuan](https://shawnricecake.github.io) and [Chenxia](https://cxhan.com/).
 
 
+## 🔗 BibTeX
+If you find Draft Attention is interesting, please cite through BibTeX:
+```bibtex
+@article{shen2025draft,
+  title={DraftAttention: Fast Video Diffusion via Low-Resolution Attention Guidance},
+  author={Shen, Xuan and Han, Chenxia and Zhou, Yufa and Xie, Yanyue and Gong, Yifan and Wang, Quanyi and Wang, Yiwei and Wang, Yanzhi and Zhao, Pu and Gu, Jiuxiang},
+  journal={arXiv preprint arXiv:2505.14708},
+  year={2025}
+}
+```
